@@ -98,7 +98,6 @@ The Gazebo GUI should open. Note that when launching the container with the `--v
 This implies that Gazebo is trying to connect to the online model database to grab the available models. This will take some time, and the Gazebo splash may freeze on your screen. 
 
 #### Test Gazebo-ROS integration
-
 Start two Docker containers of this image with [./run.sh](./run.sh). 
 * in the first Docker container's terminal start the `roscore` master from the terminal.
 * in the second Docker container's terminal start a ROS node that launches Gazebo
