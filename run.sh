@@ -13,30 +13,19 @@ IMAGE_NAME=$1 && shift 1
 THIS_HOST=`hostname`
 NVIDIA_DOCKER_VERSION=$(dpkg -l | grep nvidia-docker | awk '{ print $3 }' | awk -F'[_.]' '{print $1}')
 
-# Run the container with NVIDIA Graphics acceleration , shared X11, shared hostname
-if [ $NVIDIA_DOCKER_VERSION = "2" ]; then
-  docker run --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=0 --rm \
-    --net=host \
-    --ipc=host \
-    --privileged \
-    -e DISPLAY=$DISPLAY \
-    -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-    -v $HOME/.Xauthority:/root/.Xauthority -e XAUTHORITY=/root/.Xauthority \
-    -e ROS_HOSTNAME=$THIS_HOST \
-    -it $IMAGE_NAME "$@"
-elif [ $NVIDIA_DOCKER_VERSION = "1" ]; then
-  nvidia-docker run --rm \
-    --net=host \
-    --ipc=host \
-    --privileged \
-    -e DISPLAY=$DISPLAY \
-    -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-    -v $HOME/.Xauthority:/root/.Xauthority -e XAUTHORITY=/root/.Xauthority \
-    -e ROS_HOSTNAME=$THIS_HOST \
-    -it $IMAGE_NAME "$@"
+
+# Determine the appropriate version of the docker run command
+if [ $NVIDIA_DOCKER_VERSION = "1" ]; then
+    docker_run_cmd="nvidia-docker run --rm"
+elif [ $NVIDIA_DOCKER_VERSION = "2" ]; then
+  docker_run_cmd="docker run --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=0 --rm"
 else
   echo "[Warning] nvidia-docker not installed, running docker without Nvidia hardware acceleration / OpenGL support"
-  docker run --rm \
+  docker_run_cmd="docker run --rm"
+fi
+
+# Run the container with NVIDIA Graphics acceleration, shared network interface, shared hostname, shared X11
+$(echo $docker_run_cmd) \
     --net=host \
     --ipc=host \
     --privileged \
@@ -45,4 +34,3 @@ else
     -v $HOME/.Xauthority:/root/.Xauthority -e XAUTHORITY=/root/.Xauthority \
     -e ROS_HOSTNAME=$THIS_HOST \
     -it $IMAGE_NAME "$@"
-fi
