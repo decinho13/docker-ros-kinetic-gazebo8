@@ -1,6 +1,6 @@
-# Dockerfile based on 
-# - https://github.com/gandrein/docker_ros_kinetic_cuda9/Dockerfile 
-# and Gazebo instructions at 
+# Dockerfile based on
+# - https://github.com/gandrein/docker_ros_kinetic_cuda9/Dockerfile
+# and Gazebo instructions at
 # http://gazebosim.org/tutorials/?tut=ros_wrapper_versions
 
 FROM nvidia/cuda:9.0-devel-ubuntu16.04
@@ -16,16 +16,16 @@ lsb-release \
 mesa-utils \
 wget \
 curl \
-sudo vim \
+sudo vim nano byobu \
 python-rosdep python-rosinstall \
 python3-pip python-pip \
-build-essential \
-net-tools iputils-ping \
+build-essential socat supervisor x11vnc xvfb xterm \
+net-tools iputils-ping fluxbox git novnc \
 && apt-get clean
 
 
 # ---------------------------------- ROS-Kinetic Desktop Full Image -----------------------------
-# Based on 
+# Based on
 # https://github.com/osrf/docker_images/blob/5399f380af0a7735405a4b6a07c6c40b867563bd/ros/kinetic/ubuntu/xenial/desktop-full/Dockerfile
 
 # Install ROS
@@ -58,13 +58,23 @@ RUN sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get install -y
 	ros-kinetic-gazebo8-ros-control \
 	&& apt-get clean
 
+RUN apt-get install -y ros-kinetic-moveit
+
+
+
+RUN nohup Xvfb :1 -screen 0 1024x768x16 &> xvfb.log & && DISPLAY=:1.0 && export DISPLAY
+
+RUN sudo apt install -y libjansson-dev nodejs npm nodejs-legacy libboost-dev imagemagick libtinyxml-dev mercurial cmake build-essential
+RUN cd ~; hg clone https://bitbucket.org/osrf/gzweb && cd ~/gzweb && hg up gzweb_1.4.0 && npm run deploy --- -m
+
+
+
 # Setup environment
 # Expose port
-EXPOSE 11345
+EXPOSE 11345 8080 7000
+COPY . /app
 
 COPY ./entrypoint_setup.sh /
 
 ENTRYPOINT ["/entrypoint_setup.sh"]
-CMD ["/bin/bash"]
-
-
+CMD ["sudo","/bin/bash", "/app/entrypoint.sh"]

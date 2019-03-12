@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-IMAGE_NAME=ros_kinetic_gazebo8
+IMAGE_NAME=decinho13/ros-final:1.0.0
 # Check args
 if [ "$#" -ne 1 ]; then
   echo "usage: ./build.sh GIVEN_IMAGE_NAME"
