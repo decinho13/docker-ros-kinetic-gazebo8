@@ -57,9 +57,19 @@ RUN sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get install -y
 
 RUN apt-get install -y ros-kinetic-moveit
 
+COPY . /workspace/src/
+RUN source /opt/ros/indigo/setup.bash && \
+    cd /workspace/src && \
+    git clone -b kinetic-devel https://github.com/ros-simulation/gazebo_ros_pkgs.git && \
+    git clone https://github.com/shadow-robot/pysdf.git && \
+    git clone -b F_add_moveit_funtionallity https://github.com/shadow-robot/gazebo2rviz.git && \
+    cd /workspace/src && \
+    rosdep update && \
+    rosdep install --default-yes --all --ignore-src && \
+    catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release
 
-
-RUN nohup Xvfb :1 -screen 0 1024x768x16 &> xvfb.log & && DISPLAY=:1.0 && export DISPLAY
+RUN nohup Xvfb :1 -screen 0 1024x768x16 &> xvfb.log & 
+RUN DISPLAY=:1.0 && export DISPLAY
 
 RUN sudo apt install -y libjansson-dev nodejs npm nodejs-legacy libboost-dev imagemagick libtinyxml-dev mercurial cmake build-essential
 RUN cd ~; hg clone https://bitbucket.org/osrf/gzweb && cd ~/gzweb && hg up gzweb_1.4.0 && xvfb-run -s "-screen 0 1280x1024x24" ./deploy.sh -m -t
@@ -70,8 +80,6 @@ RUN cd ~; hg clone https://bitbucket.org/osrf/gzweb && cd ~/gzweb && hg up gzweb
 # Expose port
 EXPOSE 11345 8080 7000 7681
 COPY . /app
-
-COPY ./entrypoint_setup.sh /
 
 ENTRYPOINT ["app/entrypoint.sh"]
 CMD [/bin/bash"]
