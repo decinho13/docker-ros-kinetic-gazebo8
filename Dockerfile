@@ -1,13 +1,10 @@
 # Dockerfile based on
-# - https://github.com/gandrein/docker_ros_kinetic_cuda9/Dockerfile
+# - https://github.com/gandrein/docker_ros_kinetic_gazebo8/Dockerfile
 # and Gazebo instructions at
 # http://gazebosim.org/tutorials/?tut=ros_wrapper_versions
 
 FROM nvidia/cuda:9.0-devel-ubuntu16.04
 
-MAINTAINER Andrei Gherghescu <gandrein@gmail.com>
-
-LABEL Description="ROS-Kinetic-Full-Desktop & Gazebo 8 with CUDA 9 support for Ubuntu 16.04" Version="1.0"
 
 # ------------------------------------------ Install required (&useful) packages --------------------------------------
 RUN apt-get update && apt-get install -y \
@@ -65,13 +62,13 @@ RUN apt-get install -y ros-kinetic-moveit
 RUN nohup Xvfb :1 -screen 0 1024x768x16 &> xvfb.log & && DISPLAY=:1.0 && export DISPLAY
 
 RUN sudo apt install -y libjansson-dev nodejs npm nodejs-legacy libboost-dev imagemagick libtinyxml-dev mercurial cmake build-essential
-RUN cd ~; hg clone https://bitbucket.org/osrf/gzweb && cd ~/gzweb && hg up gzweb_1.4.0 && npm run deploy --- -m
+RUN cd ~; hg clone https://bitbucket.org/osrf/gzweb && cd ~/gzweb && hg up gzweb_1.4.0 && xvfb-run -s "-screen 0 1280x1024x24" ./deploy.sh -m -t
 
 
 
 # Setup environment
 # Expose port
-EXPOSE 11345 8080 7000
+EXPOSE 11345 8080 7000 7681
 COPY . /app
 
 COPY ./entrypoint_setup.sh /
