@@ -58,15 +58,10 @@ RUN sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get install -y
 RUN apt-get install -y ros-kinetic-moveit
 
 COPY . /workspace/src/
-RUN source /opt/ros/indigo/setup.bash && \
-    cd /workspace/src && \
+RUN cd /workspace/src && \
     git clone -b kinetic-devel https://github.com/ros-simulation/gazebo_ros_pkgs.git && \
     git clone https://github.com/shadow-robot/pysdf.git && \
-    git clone -b F_add_moveit_funtionallity https://github.com/shadow-robot/gazebo2rviz.git && \
-    cd /workspace/src && \
-    rosdep update && \
-    rosdep install --default-yes --all --ignore-src && \
-    catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release
+    git clone -b F_add_moveit_funtionallity https://github.com/shadow-robot/gazebo2rviz.git    
 
 RUN nohup Xvfb :1 -screen 0 1024x768x16 &> xvfb.log & 
 RUN DISPLAY=:1.0 && export DISPLAY
