@@ -76,5 +76,5 @@ COPY . /app
 
 COPY ./entrypoint_setup.sh /
 
-ENTRYPOINT ["/entrypoint_setup.sh"]
-CMD ["sudo","/bin/bash", "/app/entrypoint.sh"]
+ENTRYPOINT ["app/entrypoint.sh"]
+CMD [/bin/bash"]
