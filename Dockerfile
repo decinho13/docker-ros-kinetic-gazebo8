@@ -59,9 +59,10 @@ RUN apt-get install -y ros-kinetic-moveit
 
 COPY . /workspace/src/
 RUN cd /workspace/src && \
-    git clone -b kinetic-devel https://github.com/ros-simulation/gazebo_ros_pkgs.git && \
     git clone https://github.com/shadow-robot/pysdf.git && \
-    git clone -b F_add_moveit_funtionallity https://github.com/shadow-robot/gazebo2rviz.git    
+    git clone -b F_add_moveit_funtionallity https://github.com/shadow-robot/gazebo2rviz.git && \
+    cd /workspace && \
+    catkin_make
 
 RUN nohup Xvfb :1 -screen 0 1024x768x16 &> xvfb.log & 
 RUN DISPLAY=:1.0 && export DISPLAY
@@ -69,12 +70,17 @@ RUN DISPLAY=:1.0 && export DISPLAY
 RUN sudo apt install -y libjansson-dev nodejs npm nodejs-legacy libboost-dev imagemagick libtinyxml-dev mercurial cmake build-essential
 RUN cd ~; hg clone https://bitbucket.org/osrf/gzweb && cd ~/gzweb && hg up gzweb_1.4.0 && xvfb-run -s "-screen 0 1280x1024x24" ./deploy.sh -m -t
 
+RUN cd /root && \
+    git clone git://github.com/c9/core.git c9sdk && \
+    cd c9sdk && \
+    scripts/install-sdk.sh && \
+    sed -i -e 's_127.0.0.1_0.0.0.0_g' /root/c9sdk/configs/standalone.js
 
 
 # Setup environment
 # Expose port
-EXPOSE 11345 8080 7000 7681
+EXPOSE 11345 8080 7000 7681 8181
 COPY . /app
 
-ENTRYPOINT ["app/entrypoint.sh"]
-CMD [/bin/bash"]
+ENTRYPOINT []
+CMD ["sudo","/bin/bash","app/entrypoint.sh"]
