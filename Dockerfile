@@ -60,10 +60,7 @@ RUN apt-get install -y ros-kinetic-moveit
 COPY . /workspace/src/
 RUN cd /workspace/src && \
     git clone https://github.com/shadow-robot/pysdf.git && \
-    git clone -b F_add_moveit_funtionallity https://github.com/shadow-robot/gazebo2rviz.git && \
-    cd /workspace && \
-    rosdep update && \
-    catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release
+    git clone -b F_add_moveit_funtionallity https://github.com/shadow-robot/gazebo2rviz.git
 
 RUN nohup Xvfb :1 -screen 0 1024x768x16 &> xvfb.log & 
 RUN DISPLAY=:1.0 && export DISPLAY
