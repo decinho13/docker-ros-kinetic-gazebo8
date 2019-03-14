@@ -21,13 +21,16 @@ case $RUN_XTERM in
     ;;
 esac
 
-exec supervisord -c /app/supervisord.conf
+exec supervisord -c /app/supervisord.conf &
 
-roscore
+roscore &
 
-gzserver --verbose
+gzserver --verbose &
 
 sleep 5
+
+cd ~/c9sdk
+node server.js --listen 0.0.0.0 --port 8181 -w /workspace/src &
 
 cd ~/gzweb
 npm start
