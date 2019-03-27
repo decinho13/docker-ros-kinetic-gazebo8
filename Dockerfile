@@ -82,8 +82,8 @@ RUN cd /workspace/src && \
     git clone https://github.com/shadow-robot/pysdf.git && \
     git clone -b F_add_moveit_funtionallity https://github.com/shadow-robot/gazebo2rviz.git
     
-RUN nohup Xvfb :1 -screen 0 1024x768x16 &> xvfb.log & 
-RUN DISPLAY=:1.0 && export DISPLAY
+
+RUN DISPLAY=:0.0
 
 RUN sudo apt install -y libjansson-dev nodejs npm nodejs-legacy libboost-dev imagemagick libtinyxml-dev mercurial cmake build-essential
 #RUN cd ~; hg clone https://bitbucket.org/osrf/gzweb && cd ~/gzweb && hg up gzweb_1.4.0 && xvfb-run -s "-screen 0 1280x1024x24" ./deploy.sh -m -t
