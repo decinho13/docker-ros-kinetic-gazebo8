@@ -52,7 +52,7 @@ RUN sudo apt-add-repository ppa:dartsim && \
 	sudo apt-get install -y libdart6-dev && \
 	sudo apt-get install -y libdart6-utils-urdf-dev mercurial
 	
-RUN sudo apt-get install -y  libsdformat7-dev protobuf-compiler libignition-msgs-dev libignition-math4-dev libignition-transport4-dev libqwt-dev graphviz libavdevice-dev xsltproc
+RUN sudo apt-get install -y  libsdformat6 protobuf-compiler libignition-msgs-dev libignition-math4-dev libignition-transport4-dev libqwt-dev graphviz libavdevice-dev xsltproc
 
 RUN  hg clone https://bitbucket.org/osrf/gazebo /tmp/gazebo && \
 	cd /tmp/gazebo && \
