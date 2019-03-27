@@ -109,4 +109,4 @@ EXPOSE 11345 8080 7000 7681 8181
 COPY . /app
 
 ENTRYPOINT []
-CMD ["sudo","sh","/app/entrypoint.sh"]
+CMD ["sudo","bash","/app/entrypoint.sh"]
