@@ -40,20 +40,38 @@ RUN echo "source /opt/ros/kinetic/setup.bash" >> /root/.bashrc
 
 # ---------------------------------- Gazebo 8  -----------------------------
 # Setup osrfoundation repository keys
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D2486D2DD83DB69272AFE98867170598AF249743
+RUN sudo apt-get purge gazebo* -y
+RUN sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
+RUN wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add - && sudo apt-get update
+RUN wget https://bitbucket.org/osrf/release-tools/raw/default/jenkins-scripts/lib/dependencies_archive.sh -O /tmp/dependencies.sh
+RUN GAZEBO_MAJOR_VERSION=8 ROS_DISTRO=kinetic . /tmp/dependencies.sh
+RUN echo $BASE_DEPENDENCIES $GAZEBO_BASE_DEPENDENCIES | tr -d '\\' | xargs sudo apt-get -y install
+
+RUN sudo apt-add-repository ppa:dartsim && \
+	sudo apt-get update && \
+	sudo apt-get install libdart6-dev && \
+	sudo apt-get install libdart6-utils-urdf-dev
+	
+RUN hg clone https://bitbucket.org/osrf/gazebo /tmp/gazebo && \
+	cd /tmp/gazebo && \
+	mkdir build && \
+	cd build && \
+	cmake ../ && -- Install path: /home/$USER/local && make -j4 && sudo make install
+
+#RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D2486D2DD83DB69272AFE98867170598AF249743
 
 # Add osrfoundation repository to sources.list
-RUN . /etc/os-release \
-    && . /etc/lsb-release \
-    && echo "deb http://packages.osrfoundation.org/gazebo/$ID-stable $DISTRIB_CODENAME main" > /etc/apt/sources.list.d/gazebo-latest.list
+#RUN . /etc/os-release \
+#    && . /etc/lsb-release \
+#    && echo "deb http://packages.osrfoundation.org/gazebo/$ID-stable $DISTRIB_CODENAME main" > /etc/apt/sources.list.d/gazebo-latest.list
 
 # Remove Gazebo installed with ROS-Kinetic full
-RUN sudo apt-get purge gazebo* -y
-RUN sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get install -y \
-	gazebo8 \
-	ros-kinetic-gazebo8-ros-pkgs \
-	ros-kinetic-gazebo8-ros-control \
-	&& apt-get clean
+
+#RUN sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get install -y \
+#	gazebo8 \
+#	ros-kinetic-gazebo8-ros-pkgs \
+#	ros-kinetic-gazebo8-ros-control \
+#	&& apt-get clean
 
 RUN apt-get install -y ros-kinetic-moveit
 
