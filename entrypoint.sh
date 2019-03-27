@@ -20,9 +20,6 @@ case $RUN_XTERM in
     rm -f /app/conf.d/xterm.conf
     ;;
 esac
-roscore &
-
-sleep 5
 
 cd ~/c9sdk
 node server.js --listen 0.0.0.0 --port 8181 -w /workspace/src &
