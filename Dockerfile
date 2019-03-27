@@ -58,7 +58,7 @@ RUN  sudo apt-get install -y libsdformat6-dev && hg clone https://bitbucket.org/
 	cd /tmp/gazebo && \
 	mkdir build && \
 	cd build && \
-	cmake ../ && -- Install path: /home/$USER/local && make -j4 && sudo make install
+	cmake ../ && make -j4 && sudo make install
 
 #RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D2486D2DD83DB69272AFE98867170598AF249743
 
