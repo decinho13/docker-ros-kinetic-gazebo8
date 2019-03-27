@@ -54,7 +54,7 @@ RUN sudo apt-add-repository ppa:dartsim && \
 	
 RUN sudo apt-get install -y  libsdformat6 protobuf-compiler libignition-msgs-dev libignition-math4-dev libignition-transport4-dev libqwt-dev graphviz libavdevice-dev xsltproc
 
-RUN  hg clone https://bitbucket.org/osrf/gazebo /tmp/gazebo && \
+RUN  sudo apt-get install -y libsdformat6-dev && hg clone https://bitbucket.org/osrf/gazebo /tmp/gazebo && \
 	cd /tmp/gazebo && \
 	mkdir build && \
 	cd build && \
