@@ -54,24 +54,13 @@ RUN sudo apt-add-repository ppa:dartsim && \
 	
 RUN sudo apt-get install -y protobuf-compiler libignition-msgs-dev libignition-math4-dev libignition-transport4-dev libqwt-dev graphviz libavdevice-dev xsltproc
 
-#RUN sudo apt-get install -y build-essential \
-#                     cmake \
-#                     mercurial \
-#                     python \
-#                     libboost-system-dev \
-#                     libtinyxml-dev \
-#                    libxml2-utils \
-#                     ruby-dev \
-#                     ruby
-#RUN hg clone https://bitbucket.org/osrf/sdformat /tmp/sdformat && cd /tmp/sdformat && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/home/$USER/local ../ && make -j4 && sudo make install
 COPY . /workspace/src/
 RUN cd /workspace/src && \
     git clone -b kinetic-devel https://github.com/ros-simulation/gazebo_ros_pkgs.git && \
     git clone https://github.com/shadow-robot/pysdf.git && \
     git clone -b F_add_moveit_funtionallity https://github.com/shadow-robot/gazebo2rviz.git && \
-    cd /workspace && catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release
     
-RUN sudo apt-get install -y sdf && hg clone https://bitbucket.org/osrf/gazebo /tmp/gazebo && \
+RUN sudo apt-get install -y libsdformat6-dev && hg clone https://bitbucket.org/osrf/gazebo /tmp/gazebo && \
 	cd /tmp/gazebo && \
 	mkdir build && \
 	cd build && \
@@ -93,8 +82,6 @@ RUN sudo apt-get install -y sdf && hg clone https://bitbucket.org/osrf/gazebo /t
 #	&& apt-get clean
 
 RUN apt-get install -y ros-kinetic-moveit
-
-
 
 RUN nohup Xvfb :1 -screen 0 1024x768x16 &> xvfb.log & 
 RUN DISPLAY=:1.0 && export DISPLAY
