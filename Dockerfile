@@ -65,11 +65,11 @@ RUN sudo apt-get install -y sdf
 #                     ruby
 #RUN hg clone https://bitbucket.org/osrf/sdformat /tmp/sdformat && cd /tmp/sdformat && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/home/$USER/local ../ && make -j4 && sudo make install
 
-#RUN hg clone https://bitbucket.org/osrf/gazebo /tmp/gazebo && \
-#	cd /tmp/gazebo && \
-#	mkdir build && \
-#	cd build && \
-#	cmake ../ && -- Install path: /home/$USER/local && make -j4 && sudo make install
+RUN hg clone https://bitbucket.org/osrf/gazebo /tmp/gazebo && \
+	cd /tmp/gazebo && \
+	mkdir build && \
+	cd build && \
+	cmake ../ && -- Install path: /home/$USER/local && make -j4 && sudo make install
 
 #RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D2486D2DD83DB69272AFE98867170598AF249743
 
