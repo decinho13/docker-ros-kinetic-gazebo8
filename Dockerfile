@@ -50,8 +50,10 @@ RUN echo $BASE_DEPENDENCIES $GAZEBO_BASE_DEPENDENCIES | tr -d '\\' | xargs sudo 
 RUN sudo apt-add-repository ppa:dartsim && \
 	sudo apt-get update && \
 	sudo apt-get install -y libdart6-dev && \
-	sudo apt-get install -y libdart6-utils-urdf-dev mercurial
+	sudo apt-get install -y libdart6-utils-urdf-dev mercuria
 	
+RUN sudo apt-get install protobuf-compiler sdf libignition-msgs-dev libignition-math4-dev libignition-transport4-dev libqwt-dev graphviz libavdevice xsltproc
+
 RUN hg clone https://bitbucket.org/osrf/gazebo /tmp/gazebo && \
 	cd /tmp/gazebo && \
 	mkdir build && \
