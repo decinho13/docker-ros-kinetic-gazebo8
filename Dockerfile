@@ -3,7 +3,7 @@
 # and Gazebo instructions at
 # http://gazebosim.org/tutorials/?tut=ros_wrapper_versions
 
-FROM nvidia/cuda:9.0-devel-ubuntu16.04
+FROM nvidia/cuda:10.0-devel-ubuntu16.04
 
 
 # ------------------------------------------ Install required (&useful) packages --------------------------------------
