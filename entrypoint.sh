@@ -5,7 +5,7 @@ set -ex
 source  /opt/ros/kinetic/setup.bash
 
 # Source enviroment variables for Gazebo
-source /usr/share/gazebo/setup.sh
+
 RUN_FLUXBOX=${RUN_FLUXBOX:-yes}
 RUN_XTERM=${RUN_XTERM:-yes}
 
@@ -25,12 +25,11 @@ exec supervisord -c /app/supervisord.conf &
 
 roscore &
 
-gzserver --verbose &
+
 
 sleep 5
 
 cd ~/c9sdk
 node server.js --listen 0.0.0.0 --port 8181 -w /workspace/src &
 
-cd ~/gzweb
-npm start
+
