@@ -68,7 +68,7 @@ COPY . /workspace/src/
 RUN cd /workspace/src && \
     git clone https://github.com/shadow-robot/pysdf.git && \
     git clone -b F_add_moveit_funtionallity https://github.com/shadow-robot/gazebo2rviz.git && \
-    cd /workspace/src && catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release
+    cd /workspace && catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release
     
 RUN sudo apt-get install -y sdf && hg clone https://bitbucket.org/osrf/gazebo /tmp/gazebo && \
 	cd /tmp/gazebo && \
