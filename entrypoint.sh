@@ -20,16 +20,15 @@ case $RUN_XTERM in
     rm -f /app/conf.d/xterm.conf
     ;;
 esac
-
-exec supervisord -c /app/supervisord.conf &
-
 roscore &
-
-
 
 sleep 5
 
 cd ~/c9sdk
-node server.js --listen 0.0.0.0 --port 8181 -w /workspace/src
+node server.js --listen 0.0.0.0 --port 8181 -w /workspace/src &
+
+exec supervisord -c /app/supervisord.conf 
+
+
 
 
