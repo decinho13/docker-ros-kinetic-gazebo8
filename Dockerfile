@@ -63,7 +63,7 @@ RUN sudo apt-get install -y build-essential \
                      libxml2-utils \
                      ruby-dev \
                      ruby
-RUN hg clone https://bitbucket.org/osrf/sdformat /tmp/sdformat && cd /tmp/sdformat && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/home/$USER/local ../ make -j4 && sudo make install
+RUN hg clone https://bitbucket.org/osrf/sdformat /tmp/sdformat && cd /tmp/sdformat && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/home/$USER/local ../ && make -j4 && sudo make install
 
 RUN hg clone https://bitbucket.org/osrf/gazebo /tmp/gazebo && \
 	cd /tmp/gazebo && \
