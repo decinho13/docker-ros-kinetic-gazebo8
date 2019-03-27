@@ -53,7 +53,7 @@ RUN sudo apt-add-repository ppa:dartsim && \
 	sudo apt-get install -y libdart6-utils-urdf-dev mercurial
 	
 RUN sudo apt-get install -y protobuf-compiler libignition-msgs-dev libignition-math4-dev libignition-transport4-dev libqwt-dev graphviz libavdevice-dev xsltproc
-RUN sudo apt-get install -y sdf
+
 #RUN sudo apt-get install -y build-essential \
 #                     cmake \
 #                     mercurial \
@@ -65,7 +65,7 @@ RUN sudo apt-get install -y sdf
 #                     ruby
 #RUN hg clone https://bitbucket.org/osrf/sdformat /tmp/sdformat && cd /tmp/sdformat && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/home/$USER/local ../ && make -j4 && sudo make install
 
-RUN hg clone https://bitbucket.org/osrf/gazebo /tmp/gazebo && \
+RUN sudo apt-get install -y sdf && hg clone https://bitbucket.org/osrf/gazebo /tmp/gazebo && \
 	cd /tmp/gazebo && \
 	mkdir build && \
 	cd build && \
