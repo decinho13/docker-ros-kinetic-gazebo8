@@ -50,7 +50,7 @@ RUN echo $BASE_DEPENDENCIES $GAZEBO_BASE_DEPENDENCIES | tr -d '\\' | xargs sudo 
 RUN sudo apt-add-repository ppa:dartsim && \
 	sudo apt-get update && \
 	sudo apt-get install -y libdart6-dev && \
-	sudo apt-get install -y libdart6-utils-urdf-dev mercuria
+	sudo apt-get install -y libdart6-utils-urdf-dev mercurial
 	
 RUN sudo apt-get install protobuf-compiler sdf libignition-msgs-dev libignition-math4-dev libignition-transport4-dev libqwt-dev graphviz libavdevice xsltproc
 
