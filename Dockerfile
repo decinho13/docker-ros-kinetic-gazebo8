@@ -54,12 +54,6 @@ RUN sudo apt-add-repository ppa:dartsim && \
 	
 RUN sudo apt-get install -y protobuf-compiler libignition-msgs-dev libignition-math4-dev libignition-transport4-dev libqwt-dev graphviz libavdevice-dev xsltproc
 
-COPY . /workspace/src/
-RUN cd /workspace/src && \
-    git clone -b kinetic-devel https://github.com/ros-simulation/gazebo_ros_pkgs.git && \
-    git clone https://github.com/shadow-robot/pysdf.git && \
-    git clone -b F_add_moveit_funtionallity https://github.com/shadow-robot/gazebo2rviz.git && \
-    
 RUN sudo apt-get install -y libsdformat6-dev && hg clone https://bitbucket.org/osrf/gazebo /tmp/gazebo && \
 	cd /tmp/gazebo && \
 	mkdir build && \
@@ -82,7 +76,12 @@ RUN sudo apt-get install -y libsdformat6-dev && hg clone https://bitbucket.org/o
 #	&& apt-get clean
 
 RUN apt-get install -y ros-kinetic-moveit
-
+COPY . /workspace/src/
+RUN cd /workspace/src && \
+    git clone -b kinetic-devel https://github.com/ros-simulation/gazebo_ros_pkgs.git && \
+    git clone https://github.com/shadow-robot/pysdf.git && \
+    git clone -b F_add_moveit_funtionallity https://github.com/shadow-robot/gazebo2rviz.git
+    
 RUN nohup Xvfb :1 -screen 0 1024x768x16 &> xvfb.log & 
 RUN DISPLAY=:1.0 && export DISPLAY
 
