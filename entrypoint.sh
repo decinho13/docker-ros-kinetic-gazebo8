@@ -30,6 +30,6 @@ roscore &
 sleep 5
 
 cd ~/c9sdk
-node server.js --listen 0.0.0.0 --port 8181 -w /workspace/src &
+node server.js --listen 0.0.0.0 --port 8181 -w /workspace/src
 
 
