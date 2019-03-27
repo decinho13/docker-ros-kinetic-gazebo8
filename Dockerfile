@@ -64,7 +64,12 @@ RUN sudo apt-get install -y protobuf-compiler libignition-msgs-dev libignition-m
 #                     ruby-dev \
 #                     ruby
 #RUN hg clone https://bitbucket.org/osrf/sdformat /tmp/sdformat && cd /tmp/sdformat && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/home/$USER/local ../ && make -j4 && sudo make install
-
+COPY . /workspace/src/
+RUN cd /workspace/src && \
+    git clone https://github.com/shadow-robot/pysdf.git && \
+    git clone -b F_add_moveit_funtionallity https://github.com/shadow-robot/gazebo2rviz.git && \
+    cd /workspace/src && catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release
+    
 RUN sudo apt-get install -y sdf && hg clone https://bitbucket.org/osrf/gazebo /tmp/gazebo && \
 	cd /tmp/gazebo && \
 	mkdir build && \
@@ -88,10 +93,7 @@ RUN sudo apt-get install -y sdf && hg clone https://bitbucket.org/osrf/gazebo /t
 
 RUN apt-get install -y ros-kinetic-moveit
 
-COPY . /workspace/src/
-RUN cd /workspace/src && \
-    git clone https://github.com/shadow-robot/pysdf.git && \
-    git clone -b F_add_moveit_funtionallity https://github.com/shadow-robot/gazebo2rviz.git
+
 
 RUN nohup Xvfb :1 -screen 0 1024x768x16 &> xvfb.log & 
 RUN DISPLAY=:1.0 && export DISPLAY
