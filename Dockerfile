@@ -117,12 +117,12 @@ ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/v$NODE_VERSION/bin:$PATH
 
 # clone gzweb
-RUN hg clone https://bitbucket.org/osrf/gzweb ~/gzweb
+#RUN hg clone https://bitbucket.org/osrf/gzweb ~/gzweb
 
 # build gzweb
-RUN cd ~/gzweb \
-    && hg up default \
-    && ./deploy.sh -m 
+#RUN cd ~/gzweb \
+#    && hg up default \
+#    && ./deploy.sh -m 
 # Setup environment
 # Expose port
 EXPOSE 11345 8080 7000 7681 8181
