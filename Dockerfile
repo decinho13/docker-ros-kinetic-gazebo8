@@ -96,9 +96,9 @@ RUN apt-get update && apt-get install -q -y \
 EXPOSE 11345 7000 7681 8181 11311
 COPY . /app
 USER root
-RUN chown -R jovyan:0 /opt/ros  && chmod -R g=u  /opt/ros 
-RUN chown -R jovyan:0  /etc  && chmod -R g=u /etc 
-RUN chown -R jovyan:0  /home  && chmod -R g=u /home 
+RUN chown -R 1000:0 /opt/ros  && chmod -R g=u  /opt/ros 
+RUN chown -R 1000:0  /etc  && chmod -R g=u /etc 
+RUN chown -R 1000:0  /home  && chmod -R g=u /home 
 ENTRYPOINT []
 CMD ["sudo","bash","/app/entrypoint.sh"]
-USER jovyan
+USER 1000
