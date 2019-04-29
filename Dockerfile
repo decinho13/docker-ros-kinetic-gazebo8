@@ -4,8 +4,13 @@
 # http://gazebosim.org/tutorials/?tut=ros_wrapper_versions
 
 FROM nvidia/cuda:10.0-devel-ubuntu16.04
-
-
+ARG NB_USER="jovyan"
+ARG NB_UID="1000"
+ARG NB_GID="100"
+ENV SHELL=/bin/bash \
+    NB_USER=$NB_USER \
+    NB_UID=$NB_UID \
+    NB_GID=$NB_GID 
 # ------------------------------------------ Install required (&useful) packages --------------------------------------
 RUN apt-get update && apt-get install -y \
 software-properties-common python-software-properties \
@@ -104,6 +109,8 @@ RUN cd ~/gzweb \
 # Expose port
 EXPOSE 11345 8080 7000 7681 8181
 COPY . /app
-
+RUN chown -R jovyan:0 /opt/ros  && chmod -R g=u  /opt/ros 
+RUN chown -R jovyan:0  /etc  && chmod -R g=u /etc 
+RUN chown -R jovyan:0  /home  && chmod -R g=u /home 
 ENTRYPOINT []
 CMD ["sudo","bash","/app/entrypoint.sh"]
