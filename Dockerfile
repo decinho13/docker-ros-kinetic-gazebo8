@@ -102,6 +102,7 @@ USER root
 RUN chown -R 1001:0 /opt/ros  && chmod -R g=u  /opt/ros 
 RUN chown -R 1001:0  /home  && chmod -R g=u /home 
 RUN chown -R 1001:0  /etc  && chmod -R g=u /etc 
+RUN chown -R 1001:0  /app  && chmod -R g=u /app 
 CMD ["bash","/app/entrypoint.sh"]
 
 USER 1001
