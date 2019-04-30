@@ -4,13 +4,7 @@
 # http://gazebosim.org/tutorials/?tut=ros_wrapper_versions
 
 FROM nvidia/cuda:10.0-devel-ubuntu16.04
-ARG NB_USER="jovyan"
-ARG NB_UID="1001"
-ARG NB_GID="100"
-ENV SHELL=/bin/bash \
-    NB_USER=$NB_USER \
-    NB_UID=$NB_UID \
-    NB_GID=$NB_GID 
+
 # ------------------------------------------ Install required (&useful) packages --------------------------------------
 RUN apt-get update && apt-get install -y \
 software-properties-common python-software-properties \
@@ -92,19 +86,12 @@ RUN apt-get update && apt-get install -q -y \
     && rm -rf /var/lib/apt/lists/*
     
 # Setup environment
-RUN groupadd wheel -g 11 && \
-    echo "auth required pam_wheel.so use_uid" >> /etc/pam.d/su && \
-    useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && usermod -aG sudo jovyan
+
 # Expose port
 EXPOSE 11345 7000 7681 8181 11311
 COPY . /app
-USER root
-RUN chown -R 1001:0 /opt/ros  && chmod -R g=u  /opt/ros 
-RUN chown -R 1001:0  /home  && chmod -R g=u /home 
-RUN chown -R 1001:0  /etc  && chmod -R g=u /etc 
-RUN chown -R 1001:0  /usr/lib/python2.7  && chmod -R g=u /usr/lib/python2.7 
-RUN chown -R 1001:0  /var  && chmod -R g=u /var 
-RUN chown -R 1001:0  /app  && chmod -R g=u /app 
-CMD ["bash","/app/entrypoint.sh"]
+
+
+CMD ["sudo","bash","/app/entrypoint.sh"]
 
 
