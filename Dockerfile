@@ -68,11 +68,11 @@ RUN apt-get install -y ros-kinetic-moveit
 
 RUN sudo apt install -y libjansson-dev nodejs npm nodejs-legacy libboost-dev imagemagick libtinyxml-dev mercurial cmake build-essential
 
-#RUN cd /home && \
-#    git clone git://github.com/c9/core.git c9sdk && \
-#    cd c9sdk && \
-#    scripts/install-sdk.sh && \
-#    sed -i -e 's_127.0.0.1_0.0.0.0_g' /home/c9sdk/configs/standalone.js
+RUN cd /root && \
+    git clone git://github.com/c9/core.git c9sdk && \
+    cd c9sdk && \
+    scripts/install-sdk.sh && \
+    sed -i -e 's_127.0.0.1_0.0.0.0_g' /root/c9sdk/configs/standalone.js
 # Setup demo environment variables
 ENV HOME=/root \
     DEBIAN_FRONTEND=noninteractive \
@@ -97,13 +97,14 @@ RUN groupadd wheel -g 11 && \
     useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && usermod -aG sudo jovyan
 # Expose port
 EXPOSE 11345 7000 7681 8181 11311
-COPY . /home
+COPY . /app
 USER root
 RUN chown -R 1001:0 /opt/ros  && chmod -R g=u  /opt/ros 
 RUN chown -R 1001:0  /home  && chmod -R g=u /home 
 RUN chown -R 1001:0  /etc  && chmod -R g=u /etc 
 RUN chown -R 1001:0  /usr/lib/python2.7  && chmod -R g=u /usr/lib/python2.7 
 RUN chown -R 1001:0  /var  && chmod -R g=u /var 
-CMD ["bash","/home/entrypoint.sh"]
+RUN chown -R 1001:0  /app  && chmod -R g=u /app 
+CMD ["bash","/app/entrypoint.sh"]
 
 USER 1001
