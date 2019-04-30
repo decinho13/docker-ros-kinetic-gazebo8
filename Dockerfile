@@ -89,21 +89,17 @@ RUN apt-get update && apt-get install -q -y \
 
 # Expose port
 EXPOSE 11345 7000 7681 8181 11311
-COPY . /app
-COPY uid_entrypoint /home
-ARG NB_USER="jovyan"
-ARG NB_UID="1000"
-ARG NB_GID="100"
-ENV SHELL=/bin/bash \
-    NB_USER=$NB_USER \
-    NB_UID=$NB_UID \
-    NB_GID=$NB_GID 
+
 USER root
-RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && usermod -aG sudo jovyan && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-RUN chgrp -R 0 /home && \
-    chmod -R g=u /home
-CMD ["sudo","bash","/app/entrypoint.sh"]
-RUN chmod g=u /etc/passwd
-ENTRYPOINT [ "/home/uid_entrypoint" ]
-USER 1001
+ENV APP_ROOT=/opt/app-root
+ENV PATH=${APP_ROOT}/bin:${PATH} HOME=${APP_ROOT}
+COPY . ${APP_ROOT}/bin/
+RUN chmod -R u+x ${APP_ROOT}/bin && \
+    chgrp -R 0 ${APP_ROOT} && \
+    chmod -R g=u ${APP_ROOT} /etc/passwd
+USER 10001
+WORKDIR ${APP_ROOT}
+
+ENTRYPOINT [ "uid_entrypoint" ]
+CMD ["bash","entrypoint.sh"]
 
