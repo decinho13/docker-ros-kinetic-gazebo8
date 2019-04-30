@@ -91,7 +91,7 @@ RUN apt-get update && apt-get install -q -y \
 EXPOSE 11345 7000 7681 8181 11311
 COPY . /app
 ARG NB_USER="jovyan"
-ARG NB_UID="1001"
+ARG NB_UID="1000"
 ARG NB_GID="100"
 ENV SHELL=/bin/bash \
     NB_USER=$NB_USER \
@@ -101,5 +101,5 @@ USER root
 RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && usermod -aG sudo jovyan && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 CMD ["sudo","bash","/app/entrypoint.sh"]
-USER 1001
+USER 1000
 
