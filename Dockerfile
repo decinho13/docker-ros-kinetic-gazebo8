@@ -68,11 +68,11 @@ RUN apt-get install -y ros-kinetic-moveit
 
 RUN sudo apt install -y libjansson-dev nodejs npm nodejs-legacy libboost-dev imagemagick libtinyxml-dev mercurial cmake build-essential
 
-RUN cd /home && \
-    git clone git://github.com/c9/core.git c9sdk && \
-    cd c9sdk && \
-    scripts/install-sdk.sh && \
-    sed -i -e 's_127.0.0.1_0.0.0.0_g' /home/c9sdk/configs/standalone.js
+#RUN cd /home && \
+#    git clone git://github.com/c9/core.git c9sdk && \
+#    cd c9sdk && \
+#    scripts/install-sdk.sh && \
+#    sed -i -e 's_127.0.0.1_0.0.0.0_g' /home/c9sdk/configs/standalone.js
 # Setup demo environment variables
 ENV HOME=/root \
     DEBIAN_FRONTEND=noninteractive \
