@@ -102,6 +102,6 @@ RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && usermod -aG sudo jovyan &&
 
 CMD ["sudo","bash","/app/entrypoint.sh"]
 RUN chmod g=u /etc/passwd
-ENTRYPOINT [ "uid_entrypoint" ]
+ENTRYPOINT [ "/app/uid_entrypoint" ]
 USER 1001
 
