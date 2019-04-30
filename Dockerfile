@@ -92,6 +92,9 @@ RUN apt-get update && apt-get install -q -y \
     && rm -rf /var/lib/apt/lists/*
     
 # Setup environment
+RUN groupadd wheel -g 11 && \
+    echo "auth required pam_wheel.so use_uid" >> /etc/pam.d/su && \
+    useradd -m -s /bin/bash -N -u $NB_UID $NB_USER
 # Expose port
 EXPOSE 11345 7000 7681 8181 11311
 COPY . /app
