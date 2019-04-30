@@ -97,7 +97,7 @@ RUN groupadd wheel -g 11 && \
     useradd -m -s /bin/bash -N -u $NB_UID $NB_USER
 # Expose port
 EXPOSE 11345 7000 7681 8181 11311
-COPY . /app
+COPY . /home
 USER root
 RUN chown -R 1001:0 /opt/ros  && chmod -R g=u  /opt/ros 
 RUN chown -R 1001:0  /home  && chmod -R g=u /home 
