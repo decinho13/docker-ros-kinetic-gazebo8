@@ -5,7 +5,7 @@ set -ex
 source  /opt/ros/kinetic/setup.bash
 
 
-exec supervisord -c /opt/app-root/supervisord.conf 
+exec supervisord -c /opt/app-root/bin/supervisord.conf 
 
 #cd /home/c9sdk
 #node server.js --listen 0.0.0.0 --port 8181 -w /
