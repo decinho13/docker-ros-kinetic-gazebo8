@@ -5,7 +5,7 @@
 
 FROM nvidia/cuda:10.0-devel-ubuntu16.04
 ARG NB_USER="jovyan"
-ARG NB_UID="1000"
+ARG NB_UID="1001"
 ARG NB_GID="100"
 ENV SHELL=/bin/bash \
     NB_USER=$NB_USER \
@@ -96,9 +96,9 @@ RUN apt-get update && apt-get install -q -y \
 EXPOSE 11345 7000 7681 8181 11311
 COPY . /app
 USER root
-RUN chown -R 1000:0 /opt/ros  && chmod -R g=u  /opt/ros 
-RUN chown -R 1000:0  /etc  && chmod -R g=u /etc 
-RUN chown -R 1000:0  /home  && chmod -R g=u /home 
+RUN chown -R 1001:0 /opt/ros  && chmod -R g=u  /opt/ros 
+RUN chown -R 1001:0  /etc  && chmod -R g=u /etc 
+RUN chown -R 1001:0  /home  && chmod -R g=u /home 
 ENTRYPOINT []
 CMD ["sudo","bash","/app/entrypoint.sh"]
-USER 1000
+USER 1001
