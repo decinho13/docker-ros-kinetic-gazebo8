@@ -100,6 +100,6 @@ ENV SHELL=/bin/bash \
 USER root
 RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && usermod -aG root jovyan
 
-CMD ["sudo","bash","/app/entrypoint.sh"]
+CMD ["bash","/app/entrypoint.sh"]
 USER jovyan
 
