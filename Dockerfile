@@ -105,6 +105,6 @@ RUN chown -R 1001:0  /etc  && chmod -R g=u /etc
 RUN chown -R 1001:0  /usr/lib/python2.7  && chmod -R g=u /usr/lib/python2.7 
 RUN chown -R 1001:0  /var  && chmod -R g=u /var 
 RUN chown -R 1001:0  /app  && chmod -R g=u /app 
-CMD ["bash","/app/entrypoint.sh"]
+CMD ["sudo","bash","/app/entrypoint.sh"]
 
-USER 1001
+
