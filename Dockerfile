@@ -94,7 +94,7 @@ RUN apt-get update && apt-get install -q -y \
 # Setup environment
 RUN groupadd wheel -g 11 && \
     echo "auth required pam_wheel.so use_uid" >> /etc/pam.d/su && \
-    useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && usermod -aG sudo 1001
+    useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && usermod -aG sudo jovyan
 # Expose port
 EXPOSE 11345 7000 7681 8181 11311
 COPY . /home
