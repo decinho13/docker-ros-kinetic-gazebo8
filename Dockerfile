@@ -68,7 +68,7 @@ RUN apt-get install -y ros-kinetic-moveit
 
 RUN sudo apt install -y libjansson-dev nodejs npm nodejs-legacy libboost-dev imagemagick libtinyxml-dev mercurial cmake build-essential
 
-RUN cd /root && \
+RUN cd /home && \
     git clone git://github.com/c9/core.git c9sdk && \
     cd c9sdk && \
     scripts/install-sdk.sh && \
