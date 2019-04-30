@@ -98,8 +98,7 @@ ENV SHELL=/bin/bash \
     NB_UID=$NB_UID \
     NB_GID=$NB_GID 
 USER root
-RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && usermod -aG root jovyan
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && usermod -aG sudo jovyan && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 CMD ["sudo","bash","/app/entrypoint.sh"]
 USER jovyan
