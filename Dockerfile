@@ -92,7 +92,7 @@ EXPOSE 11345 7000 7681 8181 11311
 COPY . /app
 COPY uid_entrypoint /home
 ARG NB_USER="jovyan"
-ARG NB_UID="1001"
+ARG NB_UID="1000"
 ARG NB_GID="100"
 ENV SHELL=/bin/bash \
     NB_USER=$NB_USER \
