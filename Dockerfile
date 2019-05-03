@@ -100,6 +100,6 @@ RUN chmod -R u+x ${APP_ROOT}/bin && \
 #USER 10001
 WORKDIR ${APP_ROOT}
 #Uncomment Entrypoint for Openshift Version
-ENTRYPOINT [ "uid_entrypoint" ]
+#ENTRYPOINT [ "uid_entrypoint" ]
 CMD ["bash","./bin/entrypoint.sh"]
 #CMD ["sh","./bin/entrypoint.sh"]
