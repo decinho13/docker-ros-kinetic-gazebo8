@@ -101,5 +101,5 @@ USER 10001
 WORKDIR ${APP_ROOT}
 #Uncomment Entrypoint for Openshift Version
 #ENTRYPOINT [ "uid_entrypoint" ]
-CMD ["bash","entrypoint.sh"]
-
+#CMD ["bash","entrypoint.sh"]
+CMD ["bash","${APP_ROOT}/bin/entrypoint.sh"]
