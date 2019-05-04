@@ -57,8 +57,19 @@ RUN sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get install -y
 	ros-kinetic-gazebo9-ros-control \
 	&& apt-get clean
 
-RUN apt-get install -y ros-kinetic-moveit
-   
+RUN apt-get install -y ros-kinetic-moveit \
+	ros-kinetic-teleop-twist-keyboard \
+	ros-kinetic-map-server \
+	ros-kinetic-fake-localization \
+	ros-kinetic-ros-control ros-kinetic-ros-controllers \
+    	ros-kinetic-gazebo-ros-pkgs ros-kinetic-gazebo-ros-control \
+    	python-rospkg ros-kinetic-teb-local-planner ros-kinetic-ackermann-msgs \
+    	ros-kinetic-effort-controllers ros-kinetic-joy \
+    	ros-kinetic-tf2-sensor-msgs python-rosinstall ros-kinetic-geometry-tutorials ros-kinetic-rosbash \
+	ros-kinetic-rqt-tf-tree \
+	ros-kinetic-rosserial-arduino ros-kinetic-rosserial-embeddedlinux ros-kinetic-rosserial-windows \
+	ros-kinetic-rosserial-server ros-kinetic-rosserial-python \
+	ros-kinetic-openni-camera ros-kinetic-joystick-drivers ros-kinetic-navigation ros-kinetic-industrial-core
 
 RUN sudo apt install -y libjansson-dev nodejs npm nodejs-legacy libboost-dev imagemagick libtinyxml-dev mercurial cmake build-essential
 
@@ -66,7 +77,7 @@ RUN cd /root && \
     git clone git://github.com/c9/core.git c9sdk && \
     cd c9sdk && \
     scripts/install-sdk.sh && \
-    sed -i -e 's_127.0.0.1_0.0.0.0_g' /root/c9sdk/configs/standalone.js
+    sed -i -e 's_127.0.0.1_0.0.0.0_g' /root/c9sdk/configs/standalone.js && npm install pty.js
 # Setup demo environment variables
 ENV HOME=/root \
     DEBIAN_FRONTEND=noninteractive \
