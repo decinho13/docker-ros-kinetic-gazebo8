@@ -72,11 +72,7 @@ RUN apt-get install -y ros-kinetic-moveit \
 
 RUN sudo apt install -y libjansson-dev nodejs npm nodejs-legacy libboost-dev imagemagick libtinyxml-dev mercurial cmake build-essential
 
-RUN cd /root && \
-    git clone git://github.com/c9/core.git c9sdk && \
-    cd c9sdk && \
-    scripts/install-sdk.sh && \
-    sed -i -e 's_127.0.0.1_0.0.0.0_g' /root/c9sdk/configs/standalone.js 
+ 
 # Setup demo environment variables
 ENV HOME=/root \
     DEBIAN_FRONTEND=noninteractive \
@@ -104,13 +100,17 @@ USER root
 ENV APP_ROOT=/opt/app-root
 ENV PATH=${APP_ROOT}/bin:${PATH} HOME=${APP_ROOT}
 COPY . ${APP_ROOT}/bin/
+RUN cd ${APP_ROOT}/bin/ && \
+    git clone git://github.com/c9/core.git c9sdk && \
+    cd c9sdk && \
+    scripts/install-sdk.sh && \
+    sed -i -e 's_127.0.0.1_0.0.0.0_g' ${APP_ROOT}/bin//c9sdk/configs/standalone.js
+    
 RUN cd ${APP_ROOT}/bin/ && mkdir share
 RUN chmod -R u+x ${APP_ROOT}/bin && \
     chgrp -R 0 ${APP_ROOT} && \
     chmod -R g=u ${APP_ROOT} /etc/passwd
-RUN chmod -R u+x /root/c9sdk && \
-    chgrp -R 0 /root/c9sdk && \
-    chmod -R g=u /root/c9sdk /etc/passwd
+
 USER 10001
 WORKDIR ${APP_ROOT}
 #Uncomment Entrypoint for Openshift Version
