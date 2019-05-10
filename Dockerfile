@@ -107,7 +107,7 @@ COPY . ${APP_ROOT}/bin/
 RUN chmod -R u+x ${APP_ROOT}/bin && \
     chgrp -R 0 ${APP_ROOT} && \
     chmod -R g=u ${APP_ROOT} /etc/passwd
-#USER 10001
+USER 10001
 WORKDIR ${APP_ROOT}
 #Uncomment Entrypoint for Openshift Version
 ENTRYPOINT [ "uid_entrypoint" ]
