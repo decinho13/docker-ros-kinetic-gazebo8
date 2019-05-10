@@ -108,6 +108,9 @@ RUN cd ${APP_ROOT}/bin/ && mkdir share
 RUN chmod -R u+x ${APP_ROOT}/bin && \
     chgrp -R 0 ${APP_ROOT} && \
     chmod -R g=u ${APP_ROOT} /etc/passwd
+RUN chmod -R u+x /root/c9sdk && \
+    chgrp -R 0 /root/c9sdk && \
+    chmod -R g=u /root/c9sdk /etc/passwd
 USER 10001
 WORKDIR ${APP_ROOT}
 #Uncomment Entrypoint for Openshift Version
