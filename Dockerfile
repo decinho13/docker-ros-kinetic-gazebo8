@@ -88,7 +88,7 @@ RUN apt-get update && apt-get install -q -y \
     libboost-all-dev \
     libgts-dev \
     pkg-config \
-    psmisc\
+    psmisc gdb\
     && rm -rf /var/lib/apt/lists/*
     
 # Setup environment
