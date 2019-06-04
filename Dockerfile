@@ -1,7 +1,7 @@
 # Dockerfile based on
 # - https://github.com/gandrein/docker_ros_kinetic_gazebo8/Dockerfile
 # and Gazebo instructions at
-# http://gazebosim.org/tutorials/?tut=ros_wrapper_versions
+# http://gazebosim.org/tutorials?tut=install_ubuntu#Alternativeinstallation:step-by-step
 
 FROM nvidia/cuda:10.0-devel-ubuntu16.04
 
@@ -50,13 +50,14 @@ RUN . /etc/os-release \
     && echo "deb http://packages.osrfoundation.org/gazebo/$ID-stable $DISTRIB_CODENAME main" > /etc/apt/sources.list.d/gazebo-latest.list
 
 
-
+# Install Gazebo 9 Simulator with ros interfaces
 RUN sudo apt-get update -y && sudo apt-get upgrade -y && sudo apt-get install -y \
 	gazebo9 \
 	ros-kinetic-gazebo9-ros-pkgs \
 	ros-kinetic-gazebo9-ros-control \
 	&& apt-get clean
-
+	
+# Install state of the art ros tools and other neccesary tools
 RUN apt-get install -y ros-kinetic-moveit \
 	ros-kinetic-teleop-twist-keyboard \
 	ros-kinetic-map-server \
@@ -69,11 +70,11 @@ RUN apt-get install -y ros-kinetic-moveit \
 	ros-kinetic-rosserial-arduino ros-kinetic-rosserial-embeddedlinux ros-kinetic-rosserial-windows \
 	ros-kinetic-rosserial-server ros-kinetic-rosserial-python \
 	ros-kinetic-openni-camera ros-kinetic-joystick-drivers ros-kinetic-navigation ros-kinetic-industrial-core
-
+	
+#Install dependencies for Cloud9
 RUN sudo apt install -y libjansson-dev nodejs npm nodejs-legacy libboost-dev imagemagick libtinyxml-dev mercurial cmake build-essential
-
  
-# Setup demo environment variables
+# Setup demo environment variables for display with noVNC
 ENV HOME=/root \
     DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
@@ -89,13 +90,12 @@ RUN apt-get update && apt-get install -q -y \
     libgts-dev \
     pkg-config \
     psmisc gdb\
-    && rm -rf /var/lib/apt/lists/*
-    
-# Setup environment
+    && rm -rf /var/lib/apt/lists/*   
 
 # Expose port
 EXPOSE 11345 7000 7681 8181 11311
 
+# Install Cloud9
 USER root
 ENV APP_ROOT=/opt/app-root
 ENV PATH=${APP_ROOT}/bin:${PATH} HOME=${APP_ROOT}
@@ -106,7 +106,8 @@ RUN cd ${APP_ROOT}/bin/ && \
     scripts/install-sdk.sh && \
     sed -i -e 's_127.0.0.1_0.0.0.0_g' ${APP_ROOT}/bin//c9sdk/configs/standalone.js
     
-
+# Change User permissions to user 10001, so it is deployable in openshift as in 
+# https://docs.openshift.com/container-platform/3.3/creating_images/guidelines.html#openshift-container-platform-specific-guidelines
 RUN chmod -R u+x ${APP_ROOT}/bin && \
     chgrp -R 0 ${APP_ROOT} && \
     chmod -R g=u ${APP_ROOT} /etc/passwd
@@ -114,7 +115,7 @@ RUN cd ${APP_ROOT}/bin/ && mkdir share
 RUN chown -R 10001 ${APP_ROOT}/bin/share
 USER 10001
 WORKDIR ${APP_ROOT}
-#Uncomment Entrypoint for Openshift Version
+#Entrypoint for Openshift Version
 ENTRYPOINT [ "uid_entrypoint" ]
 CMD ["bash","entrypoint.sh"]
-#CMD ["sh","./bin/entrypoint.sh"]
+
