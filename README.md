@@ -2,6 +2,7 @@
 
 Based on
 * [docker_ros_kinetic_cuda9](https://github.com/gandrein/docker_ros_kinetic_cuda9)
+* gandrein/docker-ros-kinetic-gazebo8
 
 
 
