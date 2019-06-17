@@ -78,7 +78,7 @@ RUN apt-get install -y ros-kinetic-moveit \
     	python-rospkg ros-kinetic-teb-local-planner ros-kinetic-ackermann-msgs \
     	ros-kinetic-effort-controllers ros-kinetic-joy \
     	ros-kinetic-tf2-sensor-msgs python-rosinstall ros-kinetic-geometry-tutorials ros-kinetic-rosbash \
-	ros-kinetic-rqt-tf-tree \
+	ros-kinetic-rqt-tf-tree ros-kinetic-cv-bridge ros-kinetic-image-geometry \
 	ros-kinetic-rosserial-arduino ros-kinetic-rosserial-embeddedlinux ros-kinetic-rosserial-windows \
 	ros-kinetic-rosserial-server ros-kinetic-rosserial-python \
 	ros-kinetic-openni-camera ros-kinetic-joystick-drivers ros-kinetic-navigation ros-kinetic-industrial-core
