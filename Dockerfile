@@ -17,8 +17,20 @@ python-rosdep python-rosinstall \
 python3-pip python-pip \
 build-essential socat supervisor x11vnc xvfb xterm \
 net-tools iputils-ping fluxbox git novnc \
+libtool pkg-config autoconf automake uuid-dev \
 && apt-get clean
 
+#-------------------------------- Install Zero-MQ ----------------------------------------------------
+RUN wget https://github.com/zeromq/libzmq/releases/download/v4.2.2/zeromq-4.2.2.tar.gz && \
+    tar xvzf zeromq-4.2.2.tar.gz && \
+    # Create make file
+    cd zeromq-4.2.2 && \
+    ./configure && \
+    # Build and install(root permission only)
+    make install && \
+    # Install zeromq driver on linux
+    ldconfig
+RUN pip install pyzmq
 
 # ---------------------------------- ROS-Kinetic Desktop Full Image -----------------------------
 # Based on
@@ -95,17 +107,24 @@ RUN apt-get update && apt-get install -q -y \
 # Expose port
 EXPOSE 11345 7000 7681 8181 11311
 
-# Install Cloud9
 USER root
 ENV APP_ROOT=/opt/app-root
 ENV PATH=${APP_ROOT}/bin:${PATH} HOME=${APP_ROOT}
 COPY . ${APP_ROOT}/bin/
+
+# Install Cloud9	
 RUN cd ${APP_ROOT}/bin/ && \
     git clone git://github.com/c9/core.git c9sdk && \
     cd c9sdk && \
     scripts/install-sdk.sh && \
     sed -i -e 's_127.0.0.1_0.0.0.0_g' ${APP_ROOT}/bin//c9sdk/configs/standalone.js
-    
+# Install openai_ros
+RUN cd ${APP_ROOT}/bin/ && mkdir ros_ws && cd ros_ws && mkdir src && cd src && \
+    git clone https://bitbucket.org/theconstructcore/openai_ros.git
+RUN rosdep update
+RUN /bin/bash -c '. /opt/ros/kinetic/setup.bash; cd  ~/bin/ros_ws; catkin_make; source devel/setup.bash; rosdep install openai_ros'
+# Install Azure CLI
+RUN cd ${APP_ROOT}/bin/ && curl -sL https://aka.ms/InstallAzureCLIDeb | bash    
 # Change User permissions to user 10001, so it is deployable in openshift as in 
 # https://docs.openshift.com/container-platform/3.3/creating_images/guidelines.html#openshift-container-platform-specific-guidelines
 RUN chmod -R u+x ${APP_ROOT}/bin && \
