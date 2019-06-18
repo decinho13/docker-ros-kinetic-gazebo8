@@ -38,7 +38,7 @@ RUN pip install pyzmq
 
 # Install ROS
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list'
-RUN apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+RUN apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 RUN apt-get update && apt-get install -y ros-kinetic-desktop-full \
  	&& rm -rf /var/lib/apt/lists/*
 
