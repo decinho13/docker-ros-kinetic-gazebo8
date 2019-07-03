@@ -11,7 +11,7 @@ software-properties-common python-software-properties \
 lsb-release \
 mesa-utils \
 wget \
-curl gdb\
+curl gdb \
 sudo vim nano byobu \
 python-rosdep python-rosinstall \
 python3-pip python-pip \
